@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -16,10 +17,11 @@ namespace furry_ironman_game
     /// </summary>
     public class FurryGame : Game
     {
-        GraphicsDeviceManager _graphics;
-        SpriteBatch _spriteBatch;
-        readonly Controls _controls;
-        private Player _player;
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
+        private Controls _controls;
+        private World _world;
+        private MainMenu _mainmenu;
 
         public event KeysPressedEvent KeysPressed;
 
@@ -34,10 +36,8 @@ namespace furry_ironman_game
         public FurryGame()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _player = new Player(new Vector2(300,300), 10);
-            _controls = new Controls {ReceiveInput = true};
             Content.RootDirectory = "Content";
-            _controls.KeyPressed += _player.OnKeysDown;
+            _controls = new Controls { ReceiveInput = true };
         }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace furry_ironman_game
         {
             // TODO: Add your initialization logic here
 
+            _world = new World(Content);
             base.Initialize();
         }
 
@@ -61,7 +62,6 @@ namespace furry_ironman_game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _player.SetTexture(Content.Load<Texture2D>("lalka"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -88,7 +88,7 @@ namespace furry_ironman_game
             else
                 _controls.NotifyKeyPressed();
             // TODO: Add your update logic here
-            _player.Update(gameTime);
+            _world.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -102,9 +102,10 @@ namespace furry_ironman_game
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _player.Draw(gameTime, _spriteBatch);
-            base.Draw(gameTime);
+                _world.Draw(gameTime);
+                base.Draw(gameTime);
             _spriteBatch.End();
         }
+
     }
 }

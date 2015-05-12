@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace furry_ironman_game
 {
-    class Player : IControllable, IVisible, IUpdatable
+    class Player : Visible, IControllable, IUpdatable
     {
         private Texture2D _texture;
         private float _maxSpeed;
@@ -46,14 +46,6 @@ namespace furry_ironman_game
         public void SetTexture(Texture2D texture)
         {
             _texture = texture;
-        }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, new Rectangle(   (int)(Coords.X),
-                                                        (int)(Coords.Y),
-                                                        (int)_texture.Width,
-                                                        (int)_texture.Height),Color.White);
         }
 
         public void Update(GameTime gameTime)

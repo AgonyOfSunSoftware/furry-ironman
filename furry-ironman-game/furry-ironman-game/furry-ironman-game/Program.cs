@@ -10,7 +10,7 @@ namespace furry_ironman_game
         /// </summary>
         static void Main(string[] args)
         {
-            using (FurryGame game = new FurryGame())
+            using (var game = new FurryGame())
             {
                 game.Run();
             }

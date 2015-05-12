@@ -9,7 +9,8 @@ namespace furry_ironman_game
 {
     interface IVisible
     {
+        
         void SetTexture(Texture2D texture);
-        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        void Draw(GameTime gameTime);
     }
 }
