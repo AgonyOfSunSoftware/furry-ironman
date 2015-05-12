@@ -14,15 +14,30 @@ namespace furry_ironman_game
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class FurryGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
+        readonly Controls _controls;
+        private Player _player;
 
-        public Game1()
+        public event KeysPressedEvent KeysPressed;
+
+        protected virtual void OnKeysPressed(KeysPressedEventArgs args)
         {
-            graphics = new GraphicsDeviceManager(this);
+            KeysPressedEvent handler = KeysPressed;
+            if (handler != null) handler(this, args);
+        }
+
+        public delegate void KeysPressedEvent(object sender, KeysPressedEventArgs args);
+
+        public FurryGame()
+        {
+            _graphics = new GraphicsDeviceManager(this);
+            _player = new Player(new Vector2(300,300), 20);
+            _controls = new Controls {ReceiveInput = true};
             Content.RootDirectory = "Content";
+            _controls.KeyPressed += _player.OnKeysDown;
         }
 
         /// <summary>
@@ -45,7 +60,8 @@ namespace furry_ironman_game
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _player.SetTexture(Content.Load<Texture2D>("lalka"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -66,12 +82,13 @@ namespace furry_ironman_game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            // Allows the game to exit and interaction
+            if(_controls.KeysDown().Contains(Keys.Escape))
                 this.Exit();
-
+            else
+                _controls.NotifyKeyPressed();
             // TODO: Add your update logic here
-
+            _player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -84,8 +101,10 @@ namespace furry_ironman_game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            _player.Draw(gameTime, _spriteBatch);
             base.Draw(gameTime);
+            _spriteBatch.End();
         }
     }
 }

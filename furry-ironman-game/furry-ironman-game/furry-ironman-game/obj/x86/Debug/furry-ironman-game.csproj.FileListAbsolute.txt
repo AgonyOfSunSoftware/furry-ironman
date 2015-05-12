@@ -1,0 +1,7 @@
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\bin\x86\Debug\furry-ironman-game.exe
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\bin\x86\Debug\furry-ironman-game.pdb
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\obj\x86\Debug\furry-ironman-game.csprojResolveAssemblyReference.cache
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\obj\x86\Debug\furry-ironman-game.exe
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\obj\x86\Debug\furry-ironman-game.pdb
+D:\Other\furry-ironman\furry-ironman-game\furry-ironman-game\furry-ironman-game\bin\x86\Debug\Content\lalka.xnb
