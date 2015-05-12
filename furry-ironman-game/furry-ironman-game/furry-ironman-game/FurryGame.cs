@@ -34,7 +34,7 @@ namespace furry_ironman_game
         public FurryGame()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _player = new Player(new Vector2(300,300), 20);
+            _player = new Player(new Vector2(300,300), 10);
             _controls = new Controls {ReceiveInput = true};
             Content.RootDirectory = "Content";
             _controls.KeyPressed += _player.OnKeysDown;

@@ -74,8 +74,10 @@
   <ItemGroup>
     <Compile Include="Controls.cs" />
     <Compile Include="IControllable.cs" />
+    <Compile Include="IMenu.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="IVisible.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PPS.cs" />
     <Compile Include="Properties\Annotations.cs" />

@@ -60,7 +60,7 @@ namespace furry_ironman_game
         {
             var keys = Keyboard.GetState(PlayerIndex.One).GetPressedKeys();
             var diff = new Vector2(0, 0);
-            var tickSpeed = gameTime.FromPPS(_maxSpeed);
+            var tickSpeed = _maxSpeed;
             if (keys.Contains((Keys)Actions.Right))
                 diff.X += tickSpeed;
             else if(keys.Contains((Keys)Actions.Left))
