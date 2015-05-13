@@ -9,9 +9,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace furry_ironman_game
 {
-    class Player : Visible, IControllable, IUpdatable
+    class Player : Drawable, IControllable, IUpdatable
     {
-        private Texture2D _texture;
         private float _maxSpeed;
         private Keys[] _keys;
 
@@ -24,16 +23,10 @@ namespace furry_ironman_game
             Jump = Keys.Space
         }
 
-        public Dictionary<Keys, Actions> Bindings { get; private set; }
-
-        public Vector2 Coords { get; private set; }
-
         public Vector2 Speed { get; private set; }
 
-        public Player(Vector2 spawnPos, float maxSpeed)
+        public Player(SpriteBatch sprite, Texture2D texture = null, float X = 0, float Y = 0, float maxSpeed = 1) : base(sprite, texture, X, Y)
         {
-            Coords = spawnPos;
-            Speed = new Vector2(0,0);
             _maxSpeed = maxSpeed;
             _keys = new Keys[0];
         }
@@ -45,34 +38,58 @@ namespace furry_ironman_game
 
         public void SetTexture(Texture2D texture)
         {
-            _texture = texture;
+            Texture = texture;
         }
 
         public void Update(GameTime gameTime)
+        {
+           Move();
+        }
+
+        private void Move()
+        {
+            if (CanMove)
+            {
+                DirectionalMove();
+                if (CanJump)
+                {
+                    var keys = Keyboard.GetState(PlayerIndex.One).GetPressedKeys();
+                    if(keys.Contains((Keys)Actions.Jump))
+
+                }
+            }
+
+        }
+
+        public bool CanJump { get; set; }
+
+        public bool CanMove { get; set; }
+
+        private void DirectionalMove()
         {
             var keys = Keyboard.GetState(PlayerIndex.One).GetPressedKeys();
             var diff = new Vector2(0, 0);
             var tickSpeed = _maxSpeed;
             if (keys.Contains((Keys)Actions.Right))
                 diff.X += tickSpeed;
-            else if(keys.Contains((Keys)Actions.Left))
+            else if (keys.Contains((Keys)Actions.Left))
                 diff.X -= tickSpeed;
             if (keys.Contains((Keys)Actions.Down))
                 diff.Y += tickSpeed;
-            else if(keys.Contains((Keys)Actions.Up))
+            else if (keys.Contains((Keys)Actions.Up))
                 diff.Y -= tickSpeed;
-            if (Math.Abs(0.0 - diff.X) >= 1.0 && Math.Abs(0.0 - diff.Y) >= 1.0)
+            //if (Math.Abs(0.0 - diff.X) >= 1.0 && Math.Abs(0.0 - diff.Y) >= 1.0)
+            //{
+            //    var tmp = Math.Abs(diff.X / diff.Y) * diff.X;
+            //    diff.Y = Math.Abs(diff.Y / diff.X) * diff.Y;
+            //    diff.X = tmp;
+            //}
+            if (diff.Length() > 0)
             {
-                var tmp = Math.Abs(diff.X / diff.Y) * diff.X;
-                diff.Y = Math.Abs(diff.Y / diff.X) * diff.Y;
-                diff.X = tmp;
+                diff.Normalize();
+                diff = diff*tickSpeed;
+                Coords += diff;
             }
-            Move(diff);
-        }
-
-        private void Move(Vector2 diff)
-        {
-            Coords += diff;
         }
     }
 }

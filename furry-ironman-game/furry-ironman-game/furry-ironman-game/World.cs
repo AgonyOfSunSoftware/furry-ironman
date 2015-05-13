@@ -8,23 +8,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace furry_ironman_game
 {
-    public class World : Drawable, IUpdatable, IDisposable
+    public class World : IDisposable
     {
         private Player _player;
         private Controls _controls;
         private ContentManager _content;
         private List<object> _gameObjects = new List<object>();
 
-        public World(ContentManager content)
+        public SpriteBatch SpriteBatch { get; set; }
+
+        public World(ContentManager content, SpriteBatch spriteBatch)
         {
             _content = content;
+            SpriteBatch = spriteBatch;
             SpawnPlayer();
         }
 
         private void SpawnPlayer()
         {
-            _player = new Player(new Vector2(300, 300), 10);
-            _player.SetTexture(_content.Load<Texture2D>("lalka"));
+            _player = new Player(SpriteBatch,_content.Load<Texture2D>("lalka"),(float)300, (float)300, 10);
             _controls = new Controls { ReceiveInput = true };
             _controls.KeyPressed += _player.OnKeysDown;
             AddGameObject(_player);

@@ -50,7 +50,6 @@ namespace furry_ironman_game
         {
             // TODO: Add your initialization logic here
 
-            _world = new World(Content);
             base.Initialize();
         }
 
@@ -64,6 +63,17 @@ namespace furry_ironman_game
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+        }
+
+        protected override void BeginRun()
+        {
+            _world = new World(Content, _spriteBatch);
+            base.BeginRun();
+        }
+
+        protected override void EndRun()
+        {
+            base.EndRun();
         }
 
         /// <summary>
